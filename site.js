@@ -1,74 +1,101 @@
-// FAQ Accordion functionality
-function toggleAccordion(trigger) {
-    const content = trigger.nextElementSibling;
-    const isActive = trigger.classList.contains('active');
-
-    // Close all other accordions
-    const allTriggers = document.querySelectorAll('.accordion-trigger');
-    const allContents = document.querySelectorAll('.accordion-content');
-
-    allTriggers.forEach(t => t.classList.remove('active'));
-    allContents.forEach(c => c.classList.remove('active'));
-
-    // Toggle current accordion if it wasn't active
-    if (!isActive) {
-        trigger.classList.add('active');
-        content.classList.add('active');
-    }
-}
-
-// Smooth scroll for anchor links (if any are added)
 document.addEventListener('DOMContentLoaded', function() {
-    // Add smooth scrolling to all links with href="#"
+    // Smooth scroll for anchor links
     const links = document.querySelectorAll('a[href^="#"]');
-
     links.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
-
             const targetId = this.getAttribute('href');
             const targetElement = document.querySelector(targetId);
-
             if (targetElement) {
-                targetElement.scrollIntoView({
-                    behavior: 'smooth'
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+
+    // Modal functionality
+    const trialModal = document.getElementById('trial-modal');
+    const openModalButtons = document.querySelectorAll('.trial-modal-button');
+    const closeModalButton = document.querySelector('.close-button');
+    const trialForm = document.getElementById('trial-form');
+
+    if (trialModal && openModalButtons.length && closeModalButton && trialForm) {
+        openModalButtons.forEach(button => {
+            // Check if the button is inside the modal form itself
+            if (!button.closest('#trial-form')) {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault(); // Prevent form submission if it's a submit button
+                    trialModal.style.display = 'block';
                 });
             }
         });
-    });
 
-    // Add click handlers for CTA buttons if needed
-    const ctaButtons = document.querySelectorAll('.btn-primary');
-    ctaButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            // You can add analytics tracking or form opening logic here
-            console.log('CTA button clicked');
+        closeModalButton.addEventListener('click', () => {
+            trialModal.style.display = 'none';
         });
-    });
-});
 
-// Optional: Add fade-in animation on scroll
-function addScrollAnimations() {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
+        window.addEventListener('click', (event) => {
+            if (event.target == trialModal) {
+                trialModal.style.display = 'none';
             }
         });
-    }, {
-        threshold: 0.1
-    });
 
-    // Observe all sections
-    const sections = document.querySelectorAll('section');
-    sections.forEach(section => {
-        section.style.opacity = '0';
-        section.style.transform = 'translateY(20px)';
-        section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(section);
-    });
-}
+        trialForm.addEventListener('submit', (event) => {
+            const webhookUrl = 'https://discord.com/api/webhooks/1383933013930283150/0Z3dQAKV4J-f6pOfGfsHXqB-AIcfzeoT2qRW7Y5M_MUOLnpoiuAuLznoUnIsZXYRDYZM';
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const company = document.getElementById('company').value;
 
-// Uncomment the line below if you want scroll animations
-// addScrollAnimations();
+            // Sastavljanje poruke
+            const payload = {
+                content:
+                    `# 📥 Nova prijava sa sajta
+                    **👤 Ime i prezime:** \`${name}\`
+                    **📧 Email adresa:** \`${email}\`
+                    **📱 Broj telefona:** \`${phone}\`
+                    **🏢 Naziv firme:** \`${company}\`
+                    `
+            };
+
+            // Slanje ka Discord Webhook-u
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            }).then(response => {
+                if (!response.ok) {
+                    console.error('Greška pri slanju na Discord:', response.statusText);
+                }
+            }).catch(error => {
+                console.error('Greška pri fetch pozivu:', error);
+            });
+
+            console.log('Prijava poslata:', { name, email, phone, company });
+            
+            trialModal.style.display = 'none';
+            trialForm.reset();
+
+            const confirmModal = document.getElementById('trial-confirm-modal');
+            if (confirmModal) {
+                confirmModal.style.display = 'block';
+
+                // Zatvaranje kada se klikne dugme u modalu
+                confirmModal.querySelectorAll('.close-button').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        confirmModal.style.display = 'none';
+                    });
+                });
+
+                // Zatvaranje klikom van modala
+                window.addEventListener('click', (event) => {
+                    if (event.target === confirmModal) {
+                        confirmModal.style.display = 'none';
+                    }
+                });
+            }
+        });
+    }
+});
