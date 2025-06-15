@@ -1,3 +1,23 @@
+// FAQ Accordion functionality
+function toggleAccordion(trigger) {
+    const content = trigger.nextElementSibling;
+    const isActive = trigger.classList.contains('active');
+
+    // Close all other accordions
+    const allTriggers = document.querySelectorAll('.accordion-trigger');
+    const allContents = document.querySelectorAll('.accordion-content');
+
+    allTriggers.forEach(t => t.classList.remove('active'));
+    allContents.forEach(c => c.style.maxHeight = null);
+
+    // Toggle current accordion if it wasn't active
+    if (!isActive) {
+        trigger.classList.add('active');
+        content.classList.add('active');
+        content.style.maxHeight = content.scrollHeight + 'px';
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     // Smooth scroll for anchor links
     const links = document.querySelectorAll('a[href^="#"]');
