@@ -7,9 +7,9 @@
 
 :root {
     /* Tempus brand colors */
-    --tempus-blue: hsl(186, 18%, 44%);
-    --tempus-blue-dark: hsl(186, 18%, 36%);
-    --tempus-blue-light: hsl(186, 18%, 94%);
+    --tempus-blue: #598087;
+    --tempus-blue-dark: #436065;
+    --tempus-blue-light: #dce4e7;
     --tempus-orange: hsl(44, 94%, 65%);
     --tempus-orange-dark: hsl(44, 94%, 57%);
     --tempus-gray-50: hsl(0, 0%, 100%);
@@ -85,7 +85,7 @@ body {
 
 /* Hero Section */
 .hero-section {
-    background: linear-gradient(135deg, var(--tempus-blue-light) 0%, white 100%);
+    background: linear-gradient(0deg, var(--tempus-blue-light) 0%, white 100%);
     padding: 15rem 1rem;
 }
 
@@ -150,7 +150,8 @@ body {
 /* Benefits Section */
 .benefits-section {
     padding: 5rem 1rem;
-    background: linear-gradient(135deg, var(--tempus-gray-50) 0%, white 100%);
+    /*background: linear-gradient(0deg, var(--tempus-gray-50) 0%, white 100%);*/
+    background-color: var(--tempus-gray-50);
 }
 
 .benefits-grid {
@@ -350,7 +351,7 @@ body {
 /* FAQ Section */
 .faq-section {
     padding: 5rem 1rem;
-    background: linear-gradient(135deg, white 0%, var(--tempus-blue-light) 100%);
+    background: linear-gradient(0deg, var(--tempus-gray-50) 0%, var(--tempus-blue-light) 100%);
 }
 
 .faq-container {
