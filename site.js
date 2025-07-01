@@ -67,8 +67,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const phone = document.getElementById('phone').value;
             const company = document.getElementById('company').value;
             
-            const address = document.getElementById('company').value;
-            const company_website = document.getElementById('company').value;
+            const address = document.getElementById('address').value;
+            const company_website = document.getElementById('company_website').value;
 
             const payload = {
                 name,
