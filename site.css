@@ -54,6 +54,14 @@ body {
     margin-bottom: 4rem;
 }
 
+.section-divider {
+    height: 0px;
+    border: 1px solid var(--tempus-blue);
+    border-radius:0.5px;
+    width: 80%;
+    margin: 1rem 10%;
+}
+
 /* Buttons */
 .btn-primary {
     background: var(--tempus-orange);
