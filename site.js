@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Modal functionality
+    const loadedAt = Date.now();
     const trialModal = document.getElementById('trial-modal');
     const openModalButtons = document.querySelectorAll('.trial-modal-button');
     const closeModalButton = document.querySelector('.close-button');
@@ -60,44 +61,44 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         trialForm.addEventListener('submit', (event) => {
-            const webhookUrl = 'https://discord.com/api/webhooks/1383933013930283150/0Z3dQAKV4J-f6pOfGfsHXqB-AIcfzeoT2qRW7Y5M_MUOLnpoiuAuLznoUnIsZXYRDYZM';
             event.preventDefault();
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             const phone = document.getElementById('phone').value;
             const company = document.getElementById('company').value;
+            
+            const address = document.getElementById('company').value;
+            const company_website = document.getElementById('company').value;
 
-            // Sastavljanje poruke
             const payload = {
-                content:
-                    `# 📥 Nova prijava sa sajta
-                    **👤 Ime i prezime:** \`${name}\`
-                    **📧 Email adresa:** \`${email}\`
-                    **📱 Broj telefona:** \`${phone}\`
-                    **🏢 Naziv firme:** \`${company}\`
-                    `
+                name,
+                email,
+                phone,
+                company,
+                loadedAt,
+                address,
+                company_website
             };
 
             // Slanje ka Discord Webhook-u
-            fetch(webhookUrl, {
+            fetch("https://tempus-contact-modal.rasicdnikola.workers.dev", {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
-            }).then(response => {
-                if (!response.ok) {
-                    console.error('Greška pri slanju na Discord:', response.statusText);
-                }
-            }).catch(error => {
-                console.error('Greška pri fetch pozivu:', error);
-            });
+            })
+                .then(res => {
+                    if (!res.ok) {
+                        console.error('Greška prilikom slanja:', res.statusText);
+                    }
+                })
+                .catch(err => console.error('Greška u fetch pozivu:', err));
 
-            console.log('Prijava poslata:', { name, email, phone, company });
-            
             trialModal.style.display = 'none';
             trialForm.reset();
 
+            console.log('Prijava poslata:', { name, email, phone, company });
+            
+            let confirmModalMessage = ''; // ovde da se stavi tekst za gresku ako je bila greska i tekst za kontakt ako je bilo ok
             const confirmModal = document.getElementById('trial-confirm-modal');
             if (confirmModal) {
                 confirmModal.style.display = 'block';
