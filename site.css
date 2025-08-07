@@ -85,49 +85,65 @@ body {
 
 /* Hero Section */
 .hero-section {
-    background: linear-gradient(0deg, var(--tempus-blue-light) 0%, white 100%);
-    padding: 15rem 1rem;
+    position: relative;
+    padding: 5rem 10%;
+    color: white;
+    background: url('media/tempus-manager-laptop.png') center center / cover no-repeat;
+    z-index: 1;
+    height: 100vh;
+    overflow: hidden;
 }
 
+.hero-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: -1;
+}
+
+
 .hero-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 4rem;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    gap: 10%;
     align-items: center;
+    justify-content: space-between;
 }
 
 .hero-content {
     text-align: center;
+    color: white;
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
 }
 
 .hero-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--tempus-gray-900);
-    margin-bottom: 1.5rem;
-    line-height: 1.1;
+    color: white;
+    line-height: normal;
+    font-size: 3rem;
 }
 
 .hero-title-accent {
-    color: var(--tempus-blue);
+    color: var(--tempus-orange); /* istaknuta nijansa */
 }
 
-.hero-description {
-    font-size: 1.25rem;
-    color: var(--tempus-gray-800);
-    margin-bottom: 2rem;
-    line-height: 1.6;
+.hero-description,
+.hero-note {
+    color: hsl(0, 0%, 90%);
 }
+
 
 .hero-btn {
     padding: 1rem 2rem;
     font-size: 1.125rem;
-    margin-bottom: 1rem;
+    margin-bottom: -1rem;
 }
 
 .hero-note {
     font-size: 0.875rem;
-    color: var(--tempus-gray-800);
 }
 
 .hero-image-container {
@@ -140,6 +156,7 @@ body {
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
     border: 1px solid var(--tempus-gray-200);
     transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 .hero-image:hover {
@@ -577,7 +594,7 @@ span.close-button:focus {
 #trial-form {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.5rem;
 }
 
 #trial-form label {
@@ -587,6 +604,7 @@ span.close-button:focus {
 
 #trial-form input {
     padding: 0.75rem;
+    margin: -1.5rem 0 0 0;
     border: 1px solid var(--tempus-gray-200);
     border-radius: 0.5rem;
     font-size: 1rem;
@@ -608,9 +626,6 @@ span.close-button:focus {
 
 /* Responsive Design */
 @media (min-width: 768px) {
-    .hero-grid {
-        grid-template-columns: 1fr 1fr;
-    }
 
     .hero-content {
         text-align: left;
@@ -650,6 +665,7 @@ span.close-button:focus {
 }
 
 @media (min-width: 1024px) {
+    
     .hero-title {
         font-size: 4rem;
     }
@@ -660,5 +676,13 @@ span.close-button:focus {
 
     .benefits-grid {
         grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (orientation: portrait) {
+    .hero-grid {
+        flex-direction: column;
+        gap: 0;
+        justify-content: space-around;
     }
 }

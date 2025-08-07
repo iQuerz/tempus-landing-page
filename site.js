@@ -18,6 +18,40 @@ function toggleAccordion(trigger) {
     }
 }
 
+// Animations Section
+window.addEventListener('DOMContentLoaded', () => {
+    // Trigger fade-in elements
+    const fadeInElements = document.querySelectorAll('.fade-in-element');
+    fadeInElements.forEach((el, index) => {
+        el.style.animationDelay = `${0.3 + index * 0.3}s`;
+        el.classList.add('fade-in-trigger');
+    });
+
+    // Trigger slide-in for hero image
+    const heroImage = document.querySelector('.slide-in-right');
+    if (heroImage) {
+        heroImage.classList.add('slide-in-right'); // already has class
+    }
+});
+
+window.addEventListener('DOMContentLoaded', () => {
+    const el = document.querySelector('.typewriter');
+    const fullText = el.getAttribute('data-text');
+    let currentChar = 0;
+
+    function typeNextChar() {
+        if (currentChar <= fullText.length) {
+            el.textContent = fullText.substring(0, currentChar);
+            currentChar++;
+            setTimeout(typeNextChar, 80); // brzina kucanja
+        }
+    }
+
+    typeNextChar();
+});
+
+
+// Submission form section
 document.addEventListener('DOMContentLoaded', function() {
     // Smooth scroll for anchor links
     const links = document.querySelectorAll('a[href^="#"]');
