@@ -88,7 +88,7 @@ body {
     position: relative;
     padding: 5rem 10%;
     color: white;
-    background: url('media/tempus-manager-laptop.png') center center / cover no-repeat;
+    background: url('media/tempus-manager-laptop-updated-compressed.jpg') center center / cover no-repeat;
     z-index: 1;
     height: 100vh;
     overflow: hidden;
@@ -150,19 +150,70 @@ body {
     position: relative;
 }
 
-.hero-image {
+.hero-video {
     width: 100%;
-    border-radius: 1rem;
+    border-radius: 1rem; /* Isto kao tvoja slika */
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-    border: 1px solid var(--tempus-gray-200);
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Suptilna ivica umesto sive */
     transition: all 0.3s ease;
+    cursor: pointer;
+    background: #000; /* Crna pozadina dok se video učitava */
+    display: block;
+}
+
+.hero-video:hover {
+    transform: scale(1.02); /* Malo manji scale nego kod slike da ne seče ivice plejera */
+    box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.4);
+}
+
+@media (max-width: 768px) {
+    .hero-grid {
+        flex-direction: column;
+        text-align: center;
+        padding-top: 2rem;
+    }
+    
+    .hero-image-container {
+        width: 100%;
+        margin-top: 2rem;
+    }
+}
+
+/* Centriranje i stilizacija play dugmeta */
+.custom-play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 8rem;
+    width: 8rem;
+    background: var(--tempus-blue); /* Jako suptilna providna pozadina */
+    backdrop-filter: blur(8px); /* Moderni glassmorphism efekat */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    transition: all 0.3s ease;
+    z-index: 10;
     cursor: pointer;
 }
 
-.hero-image:hover {
-    transform: scale(1.05);
-    box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.3);
+/* Velicina same strelice unutar kruga */
+.custom-play-btn svg {
+    width: 5rem;
+    height: 5rem;
+    margin-left: 0.1rem; /* Optičko centriranje strelice (jer je trougao) */
 }
+
+/* Animacija kada korisnik pređe mišem preko celog videa */
+.hero-image-container:hover {
+    background: rgba(255, 255, 255, 0.2); /* Postaje malo svetlije */
+    transform: translate(-50%, -50%) scale(1.1); /* Blago se poveća */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
 
 /* Benefits Section */
 .benefits-section {

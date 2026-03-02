@@ -154,3 +154,44 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+    const videoContainer = document.getElementById('heroVideoContainer');
+    const video = document.getElementById('tempusVideo');
+    console.log(video)
+    const playBtn = document.getElementById('playOverlay');
+
+    videoContainer.addEventListener('click', function() {
+        // 1. Vraćamo prave kontrole tek kada se video pokrene
+        video.setAttribute('controls', 'controls');
+        
+        // 2. Sklanjamo naše dizajnirano dugme
+        playBtn.style.display = 'none';
+        
+        // 3. Puštamo video
+        video.play();
+        console.log(video)
+
+        // 4. Zahtevamo Fullscreen (svaki browser ima svoju komandu)
+        if (video.requestFullscreen) {
+            video.requestFullscreen();
+        } else if (video.webkitRequestFullscreen) { /* Safari/iOS */
+            video.webkitRequestFullscreen();
+        } else if (video.msRequestFullscreen) { /* IE/Edge */
+            video.msRequestFullscreen();
+        }
+    });
+
+    // BONUS TRIK: Šta ako korisnik izađe iz fullscreen-a usred videa?
+    // Lepo je da se video pauzira i da se vrati ono lepo Play dugme.
+    document.addEventListener('fullscreenchange', exitHandler);
+    document.addEventListener('webkitfullscreenchange', exitHandler); // Safari
+    
+    function exitHandler() {
+        if (!document.fullscreenElement && !document.webkitIsFullScreen) {
+            video.pause();
+            video.removeAttribute('controls');
+            playBtn.style.display = 'flex';
+        }
+    }
+});
